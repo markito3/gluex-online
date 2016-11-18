@@ -113,24 +113,6 @@ int  main(int argc, char *argv[])  {
       }
       // vmeDSCStatus(DSC_SLOT,1);
      }
-  } else if (SPECIAL){
-    vmeDSCSetPulseWidthAll(PULSEWIDTH, PULSEWIDTH, 1);
-    // set special threshold for all channels to -10mV
-    
-    int thr = 2048 + THRESHOLD; 
-    // this is +8mV, 2048 would be 0mV 2038 would be -10mV
-    for(int idsc=0; idsc<NDISC; idsc++) {
-      int DSC_SLOT = vmeDSCSlot(idsc);
-      for (int ch=0; ch<16; ch++) {
-	vmeDSCSpiDACSet(DSC_SLOT, ch, 0x00, thr); //TDC
-	vmeDSCSpiDACSet(DSC_SLOT, ch, 0xc0, thr); //TRG
-      }
-      int val1,val2;
-      val1 = vmeDSCGetThreshold(DSC_SLOT, 1, 1);
-      val2 = vmeDSCGetThreshold(DSC_SLOT, 1, 2);
-      printf("SLOT %d: Threshold at %d / %d\n", DSC_SLOT, val1, val2);
-      vmeDSCStatus(DSC_SLOT,1);
-    }
   }
 
   std::cout<<"....conintue?(hit return) ";
